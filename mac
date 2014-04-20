@@ -91,9 +91,7 @@ fancy_echo "Installing watch, to execute a program periodically and show the out
   brew install watch
 ### end mac-components/packages
 
-fancy_echo "Starting Postgres ..."
-  brew services start postgres
-### end mac-components/start-services
+### end #mac-components/start-services
 
 fancy_echo "Installing rbenv, to change Ruby versions ..."
   brew install rbenv
@@ -115,11 +113,7 @@ fancy_echo "Installing ruby-build, to install Rubies ..."
   brew install ruby-build
 ### end mac-components/rbenv
 
-fancy_echo "Upgrading and linking OpenSSL ..."
-  brew install openssl
-  brew link openssl --force
-  brew install curl-ca-bundle
-### end mac-components/compiler-and-libraries
+### end #mac-components/compiler-and-libraries
 
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 
@@ -157,18 +151,7 @@ fancy_echo "Installing GitHub CLI client ..."
   brew install hub
 ### end mac-components/github
 
-if ! command -v rcup &>/dev/null; then
-  fancy_echo "Installing rcm, to manage your dotfiles ..."
-    brew tap thoughtbot/formulae
-    brew install rcm
-else
-  fancy_echo "rcm already installed. Skipping ..."
-fi
-### end mac-components/rcm
+### end #mac-components/rcm
 
-fancy_echo "Installing your personal additions from ~/.laptop.local ..."
-  if [[ -f ~/.laptop.local ]]; then
-    source ~/.laptop.local
-  fi
-### end common-components/personal-additions
+### end #common-components/personal-additions
 

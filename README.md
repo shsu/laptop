@@ -24,6 +24,7 @@ terminal and then click "Install".
 
 We support:
 
+* [14.04: Trusty Tahr](https://wiki.ubuntu.com/TrustyTahr/ReleaseNotes),
 * [13.10: Saucy Salamander](https://wiki.ubuntu.com/SaucySalamander/ReleaseNotes),
 * [12.04 LTS: Precise Pangolin](https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes),
 * Debian stable (currently [wheezy](http://www.debian.org/releases/stable/)).
@@ -36,13 +37,13 @@ Install
 
 Read, then run the script:
 
-    bash <(curl -s https://raw.github.com/thoughtbot/laptop/master/mac)
+    bash <(curl -s https://raw.githubusercontent.com/thoughtbot/laptop/master/mac)
 
 ### Linux
 
 Read, then run the script:
 
-    bash <(wget -qO- https://raw.github.com/thoughtbot/laptop/master/linux)
+    bash <(wget -qO- https://raw.githubusercontent.com/thoughtbot/laptop/master/linux)
 
 What it sets up
 ---------------
@@ -50,12 +51,14 @@ What it sets up
 * Zsh as your shell
 * Bundler gem for managing Ruby libraries
 * Exuberant Ctags for indexing files for vim tab completion
-* Foreman gem for serving Rails apps locally
+* Foreman for serving Rails apps locally
 * Heroku Config plugin for local `ENV` variables
 * Heroku Toolbelt for interacting with the Heroku API
 * Hub gem for interacting with the GitHub API
 * Homebrew for managing operating system libraries (OS X only)
 * ImageMagick for cropping and resizing images
+* Node.js and NPM, for running apps and installing JavaScript packages
+* Parity for development, staging, and production parity
 * Postgres for storing relational data
 * Qt for headless JavaScript testing via Capybara Webkit
 * Rails gem for writing web applications
@@ -69,6 +72,10 @@ What it sets up
 
 It should take less than 15 minutes to install (depends on your machine).
 
+Laptop can be run multiple times on the same machine safely. It will upgrade
+already installed packages and install and activate a new version of ruby (if
+one is available).
+
 Make your own customizations
 ----------------------------
 
@@ -77,12 +84,52 @@ Put your customizations in `~/.laptop.local`. For example, your
 
     #!/bin/sh
 
-    brew tap phinze/homebrew-cask
+    brew tap caskroom/cask
     brew install brew-cask
 
     brew cask install dropbox
     brew cask install google-chrome
     brew cask install rdio
+
+You should write your customizations such that they can be run safely more than
+once. See the `mac` and `linux` scripts for examples.
+
+Laptopped linux vagrant boxes
+-----------------------------------------------------------
+
+We now publish [vagrant](http://vagrantup.com) boxes for every supported linux
+distro. These boxes have the laptop script applied already and are ready to go.
+Getting started is as easy as creating a Vagrantfile that looks like:
+
+    Vagrant.configure('2') do |config|
+      config.vm.box = 'thoughtbot/ubuntu-14-04-server-with-laptop'
+    end
+
+
+```sh
+# And then in the same directory as your Vagrantfile . . .
+vagrant up
+vagrant ssh
+
+```
+
+You can also use `vagrant init`:
+
+    # In your project directory
+    vagrant init thoughtbot/ubuntu-14-04-server-with-laptop
+    vagrant up
+    vagrant ssh
+
+Laptopped vagrantcloud boxes currently available:
+
+* `thoughtbot/debian-wheezy-64-with-laptop`
+* `thoughtbot/debian-jessie-64-with-laptop`
+* `thoughtbot/ubuntu-14-04-server-with-laptop`
+* `thoughtbot/ubuntu-13-10-server-with-laptop`
+* `thoughtbot/ubuntu-12-04-server-with-laptop`
+
+See our [vagrantcloud profile](https://vagrantcloud.com/thoughtbot). You must
+have vagrant >= 1.5.0 to use vagrantcloud images directly.
 
 Credits
 -------

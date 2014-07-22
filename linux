@@ -32,7 +32,7 @@ fancy_echo() {
 }
 ### end common-components/shared-functions
 
-if ! grep -qiE 'wheezy|jessie|saucy|precise' /etc/os-release; then
+if ! grep -qiE 'wheezy|jessie|precise|saucy|trusty' /etc/os-release; then
   fancy_echo "Sorry! we don't currently support that distro."
   exit 1
 fi
@@ -96,18 +96,27 @@ fancy_echo "Changing your shell to zsh ..."
   chsh -s $(which zsh)
 ### end common-components/zsh
 
-if ! command -v ag &>/dev/null; then
+silver_searcher_from_source() {
+  git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
+  sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+  sh /tmp/the_silver_searcher/build.sh
+  cd /tmp/the_silver_searcher
+  sh build.sh
+  sudo make install
+  cd
+  rm -rf /tmp/the_silver_searcher
+}
+
+if ! command -v ag >/dev/null; then
   fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
-    git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
-    sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
-    sh /tmp/the_silver_searcher/build.sh
-    cd /tmp/the_silver_searcher
-    sh build.sh
-    sudo make install
-    cd
-    rm -rf /tmp/the_silver_searcher
+
+  if aptitude show silversearcher-ag &>/dev/null; then
+    sudo aptitude install silversearcher-ag
+  else
+    silver_searcher_from_source
+  fi
 fi
-### end linux-components/silver-searcher-from-source
+### end linux-components/silver-searcher
 
 if [[ ! -d "$HOME/.rbenv" ]]; then
   fancy_echo "Installing rbenv, to change Ruby versions ..."
@@ -136,11 +145,7 @@ fi
 ruby_version="$(curl -sSL http://ruby.thoughtbot.com/latest)"
 
 fancy_echo "Installing Ruby $ruby_version ..."
-  if [ "$ruby_version" = "2.1.1" ]; then
-    curl -fsSL https://gist.github.com/mislav/a18b9d7f0dc5b9efc162.txt | rbenv install --patch 2.1.1
-  else
-    rbenv install "$ruby_version"
-  fi
+  rbenv install -s "$ruby_version"
 
 fancy_echo "Setting $ruby_version as global default Ruby ..."
   rbenv global "$ruby_version"
@@ -160,6 +165,10 @@ fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
 
 fancy_echo "Installing Suspenders, thoughtbot's Rails template ..."
   gem install suspenders --no-document
+
+fancy_echo "Installing Parity, shell commands for development, staging, and
+production parity ..."
+  gem install parity --no-document
 ### end common-components/default-gems
 
 fancy_echo "Installing Heroku CLI client ..."

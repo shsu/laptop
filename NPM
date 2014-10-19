@@ -1,0 +1,5 @@
+npm install -g bower
+npm install -g forever
+npm install -g grunt
+npm install -g json
+npm install -g yo

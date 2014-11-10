@@ -178,14 +178,14 @@ fi
 fancy_echo "Setting up dotfiles..."
   curl -so $HOME/.aliases https://raw.githubusercontent.com/mathiasbynens/dotfiles/master/.aliases
   curl -so $HOME/.functions https://raw.githubusercontent.com/mathiasbynens/dotfiles/master/.functions
-  curl -so $HOME/.aliases https://raw.githubusercontent.com/mathiasbynens/dotfiles/master/.gitignore
+  curl -so $HOME/.gitignore https://raw.githubusercontent.com/mathiasbynens/dotfiles/master/.gitignore
   cat .aliases >> $HOME/.aliases
   cat .gitignore >> $HOME/.gitignore
   cp -i .gitconfig $HOME/.gitconfig
 
 read -p "Use my dotfiles tweaks? (y/n) "
 if [ $REPLY == "y" ]; then
-  bash <(curl -s https://raw.githubusercontent.com/shsu/dotfiles/shsu/.osx)
+  bash <(curl -s https://raw.githubusercontent.com/shsu/dotfiles/shsu-10.10/.osx)
 wait
 fi
 

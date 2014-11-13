@@ -7,7 +7,7 @@ brew cask install coconutbattery
 brew cask install disk-inventory-x
 brew cask install dropbox
 brew cask install flux
-brew cask install google-chrome
+brew cask install google-chrome --caskroom=/Applications
 brew cask install google-drive
 brew cask install handbrake
 brew cask install imagealpha

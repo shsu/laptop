@@ -24,14 +24,14 @@ append_to_zshrc() {
 }
 
 wait() {
-	read -p "Click any key to continue ... "
+  read -p "Click any key to continue ... "
 }
 
 cd $(dirname $0)
 
 read -p "Install xcode command line tools? (y/n) "
 if [ $REPLY == "y" ]; then
-	sudo xcodebuild -license
+  sudo xcodebuild -license
     xcode-select --install
     read -p "Click any key to continue ... "
 fi
@@ -171,15 +171,18 @@ source Caskfile
 
 # Dotfiles
 fancy_echo "Setting up dotfiles..."
-  curl -so $HOME/.aliases https://raw.githubusercontent.com/mathiasbynens/dotfiles/master/.aliases
-  curl -so $HOME/.functions https://raw.githubusercontent.com/mathiasbynens/dotfiles/master/.functions
-  curl -so $HOME/.gitignore https://raw.githubusercontent.com/mathiasbynens/dotfiles/master/.gitignore
-  cat .aliases >> $HOME/.aliases
-  cat .gitignore >> $HOME/.gitignore
-  cp -i .gitconfig $HOME/.gitconfig
-
 read -p "Use my dotfiles tweaks? (y/n) "
 if [ $REPLY == "y" ]; then
+  curl -so $HOME/.aliases https://raw.githubusercontent.com/shsu/dotfiles/shsu-10.10/.aliases
+  append_to_zshrc 'source $HOME/.aliases'
+
+  curl -so $HOME/.functions https://raw.githubusercontent.com/mathiasbynens/dotfiles/master/.functions
+  append_to_zshrc 'source $HOME/.functions'
+
+  curl -so $HOME/.gitconfig https://raw.githubusercontent.com/shsu/dotfiles/shsu-10.10/.gitconfig
+
+  curl -so $HOME/.gitignore https://raw.githubusercontent.com/mathiasbynens/dotfiles/master/.gitignore
+
   bash <(curl -s https://raw.githubusercontent.com/shsu/dotfiles/shsu-10.10/.osx)
 wait
 fi

@@ -1,4 +1,8 @@
+#!/usr/bin/env bash
+
+append_to_zshrc 'export HOMEBREW_CASK_OPTS="--appdir=/Applications"'
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
 brew install caskroom/cask/brew-cask
 brew cask install adobe-reader
 brew cask install alfred

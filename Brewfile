@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 
-# Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
 brew_install_or_upgrade 'coreutils'
 append_to_zshrc 'export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"'
 append_to_zshrc 'export MANPATH="/usr/local/opt/coreutils/libexec/gnubin:$MANPATH"'
 
 brew_install_or_upgrade 'moreutils'
+sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum
+
 brew_install_or_upgrade 'findutils'
 
-brew install gnu-sed --default-names
+brew install gnu-sed --with-default-names
 append_to_zshrc 'export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"'
 append_to_zshrc 'export MANPATH="/usr/local/opt/gnu-sed/libexec/gnubin:$MANPATH"'
 
 brew_install_or_upgrade 'bash'
 brew_install_or_upgrade 'bash-completion'
-
 
 # Install wget with IRI support
 brew install wget --with-iri

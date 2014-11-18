@@ -18,7 +18,6 @@ brew cask install handbrake
 brew cask install imagealpha
 brew cask install imageoptim
 brew cask install iterm2
-brew cask install macdown
 brew cask install mactracker
 brew cask install mailbox
 brew cask install rescuetime

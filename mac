@@ -48,12 +48,13 @@ if [[ ! -f "$HOME/.zshrc" ]]; then
   touch "$HOME/.zshrc"
 fi
 
-append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
-
-if [[ "$SHELL" != */zsh ]]; then
-  fancy_echo "Changing your shell to zsh ..."
-    chsh -s $(which zsh)
+# Install Oh-My-Zsh
+if [[ ! -d "$HOME/.oh-my-zsh/" ]]; then
+  curl -L http://install.ohmyz.sh | sh
+  wait
 fi
+
+append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
 
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
@@ -167,12 +168,6 @@ fancy_echo "Installing the heroku-config plugin to pull config variables locally
 # Brew, Casks, Gems
 source Brewfile
 source Caskfile
-
-# Install Oh-My-Zsh
-if [[ ! -d "$HOME/.oh-my-zsh/" ]]; then
-  curl -L http://install.ohmyz.sh | sh
-  wait
-fi
 
 # Dotfiles
 fancy_echo "Setting up dotfiles..."
